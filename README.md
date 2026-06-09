@@ -9,6 +9,8 @@ Uma aplicação Single Page Application (SPA) responsiva que integra a pesquisa 
 
 ## 🎯 Objetivo
 
+Trabalho proposto pelo professor Gerson Geraldo Homrich Cavalheiro para a disciplina TEC IV - 2026/01
+
 O objetivo central deste projeto é consumir múltiplas APIs públicas de forma paralela e harmoniosa:
 1. **Open Library API:** Buscar os dados bibliográficos de livros baseando-se em um termo de pesquisa e recuperar a sigla do idioma de origem (ex: `eng` para inglês, `fra` para francês).
 2. **Open Library Covers API:** Obter as imagens de capa dos respectivos livros.
