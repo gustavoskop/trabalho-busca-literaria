@@ -82,19 +82,25 @@ function App() {
 
     setIsFetchingCountries(true);
     try {
-      const response = await fetch(`https://restcountries.com/v3.1/lang/${searchLanguage}`);
+      // Usando repositório open-source mledoze/countries como alternativa gratuita
+      const response = await fetch(`https://raw.githubusercontent.com/mledoze/countries/master/countries.json`);
       
       if (!response.ok) {
-        if (response.status === 404) {
-          setWarning(`A sigla de idioma "${searchLanguage}" não foi encontrada na base de países (pode ser uma língua morta, construída ou não catalogada).`);
-        } else {
-          throw new Error('Falha ao comunicar com a REST Countries API.');
-        }
-        return;
+        throw new Error('Falha ao comunicar com a base de países (mledoze).');
       }
 
-      const data = await response.json();
-      setCountries(data);
+      const allCountries = await response.json();
+      
+      // Filtra os países que possuem o idioma da obra
+      const matchedCountries = allCountries.filter(country => 
+        country.languages && Object.keys(country.languages).includes(searchLanguage)
+      );
+
+      if (matchedCountries.length === 0) {
+        setWarning(`A sigla de idioma "${searchLanguage}" não foi encontrada na base de países (pode ser uma língua morta, construída ou não catalogada).`);
+      }
+
+      setCountries(matchedCountries);
     } catch (err) {
       setError(err.message || 'Erro inesperado ao buscar os países.');
     } finally {
